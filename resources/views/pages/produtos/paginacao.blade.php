@@ -11,7 +11,7 @@
         <form action="{{ route('produto.index') }}" method="get">
             <input type="text" name="pesquisar" placeholder="Digite o nome" id="">
             <button> Pesquisar </button>
-            <a type="button" class="btn btn-success float-end" href=""> Incluir Produto</a>
+            <a type="button" class="btn btn-success float-end" href="{{ route('cadastrar.produto') }}"> Incluir Produto</a>
         </form>
 
         {{-- <h2>Section title</h2> --}}
@@ -36,8 +36,14 @@
                     <td>{{ $produto->nome }}</td>
                     <td>{{ 'R$' . ' ' . number_format( $produto->valor, 2, ',', '.') }}</td>
                     <td>
-                        <a class="btn btn-light btn-sm" href="">Editar</a>
-                        <a class="btn btn-danger btn-sm" href="{{ route('produto.delete') }}">Apagar</a>
+                        <a class="btn btn-light btn-sm" href="">
+                            Editar
+                        </a>
+
+                        <meta name='csrf-token' content="{{ csrf_token() }}">
+                        <a class="btn btn-danger btn-sm" onclick="deleteRegistroPaginacao( '{{ route('produto.delete') }}', {{ $produto->id }} )">
+                            Apagar
+                        </a>
                     </td>
                 </tr>
                 @endforeach
