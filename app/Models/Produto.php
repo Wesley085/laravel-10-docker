@@ -13,4 +13,16 @@ class Produto extends Model
         'nome',
         'valor',
     ];
+
+    public static function getProdutosPesquisarIndex(string $search)
+    {
+        $produto = static::where(function ($query) use ($search) {
+            if ($search) {
+                $query->where('nome', $search);
+                $query->orWhere('nome', 'LIKE', "%{$search}%");
+            }
+        })->get();
+    
+        return $produto;
+    }    
 }
